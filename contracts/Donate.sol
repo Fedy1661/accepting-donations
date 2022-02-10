@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
 contract Donate {
-    address public owner;
+    address owner;
     mapping(address => uint) public payments;
 
     constructor(){
