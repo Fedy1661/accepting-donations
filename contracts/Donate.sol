@@ -16,9 +16,9 @@ contract Donate {
         payments[msg.sender] = msg.value;
     }
 
-    function withdraw(address payable wallet) external {
+    function withdraw(address payable _to) external {
         require(msg.sender == owner, 'You should be an owner');
-        address currentWallet = address(this);
-        wallet.transfer(currentWallet.balance);
+        address thisContract = address(this);
+        _to.transfer(thisContract.balance);
     }
 }
