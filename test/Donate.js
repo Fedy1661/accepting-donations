@@ -12,7 +12,7 @@ describe('Crypton contract', () => {
 	describe('Withdraw', () => {
 		it('Withdrawing is working', async () => {
 			expect(await donate.provider.getBalance(donate.address)).to.equal(0)
-			await donate.connect(addr1).donate({value: 101000});
+			await donate.connect(addr1).deposit({value: 101000});
 			expect(await donate.provider.getBalance(donate.address)).to.not.equal(0)
 			await donate.connect(owner).withdraw(owner.address)
 			expect(await donate.provider.getBalance(donate.address)).to.equal(0)
@@ -32,14 +32,13 @@ describe('Crypton contract', () => {
 	describe('Donate', () => {
 		it('You can donate', async () => {
 			expect(await donate.provider.getBalance(donate.address)).to.equal(0)
-			await donate.connect(addr1).donate({value: 101000})
+			await donate.connect(addr1).deposit({value: 101000})
 			expect(await donate.provider.getBalance(donate.address)).to.not.equal(0)
 		})
 
 		it('You can show donate for address', async () => {
-			await donate.connect(addr1).donate({value: 10100})
+			await donate.connect(addr1).deposit({value: 10100})
 			expect(await donate.connect(addr1).payments(addr1.address)).to.equal(10100)
-
 		})
 	})
 })

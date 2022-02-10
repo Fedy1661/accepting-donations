@@ -12,7 +12,7 @@ contract Donate {
         owner = msg.sender;
     }
 
-    function donate() external payable {
+    function deposit() external payable {
         payments[msg.sender] = msg.value;
     }
 
