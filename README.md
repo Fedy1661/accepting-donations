@@ -1,13 +1,10 @@
-Rinkeby contract: ```0x33B88216721c597174B198448E5bC106a52C98c1```
+### Main functional:
 
+1) Make a donate (use msg.value); - Done
+2) Withdraw donation to a specific address. This action can only be done by the contract creator. - Done
+3) Store the addresses of all users who have made a donation. - Done
+4) Store the donation amounts of each user. - Done
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-npx hardhat run .\scripts\delpoy.js --network rinkeby
-```
+### Additional task
+1) Write the script deploy in the test network rinkeby (use "hardhat run scripts/NAME_FILE --network rinkeby") - Done
+2) Write the tasks for rinkeby network (use "npx hardhat NAME_FILE --network rinkeby") - Done
