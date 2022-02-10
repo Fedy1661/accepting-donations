@@ -7,7 +7,17 @@ const {types} = require("hardhat/config");
 require('dotenv').config()
 
 task('accounts', 'Prints the list of accounts', taskController.accounts)
+
 task('owner', 'Get owner address', taskController.owner)
+
+task('withdraw', 'Withdraw', taskController.withdraw)
+	.addParam("to", "Receiver address", undefined, types.address)
+	.addParam("from", "Sender address", undefined, types.address)
+
+task('deposit', 'Deposit to smart-contract', taskController.deposit)
+	.addParam("to", "Receiver address", undefined, types.address)
+	.addParam("value", "Value", undefined, types.int)
+
 task("balance", "Prints an account's balance", taskController.balance)
 	.addParam("account", "The account's address", undefined, types.address);
 
