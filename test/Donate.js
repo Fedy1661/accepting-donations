@@ -6,7 +6,7 @@ describe('Crypton contract', () => {
 	beforeEach(async () => {
 		Donate = await ethers.getContractFactory('Donate');
 		donate = await Donate.deploy();
-		[owner, addr1, addr2] = await ethers.getSigners();
+		[owner, addr1] = await ethers.getSigners();
 	})
 
 	describe('Withdraw', () => {
