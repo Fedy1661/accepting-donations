@@ -44,7 +44,7 @@ class TaskController {
 		await tx.wait()
 
 		const ownerBalance = (await owner.getBalance()).toString()
-		const contractBalance = (await donate.getBalance()).toString()
+		const contractBalance = (await web3.eth.getBalance(to)).toString()
 
 		console.log('Owner balance:', web3.utils.fromWei(ownerBalance, "ether"), "ETH");
 		console.log('Smart Contract:', web3.utils.fromWei(contractBalance, "ether"), "ETH");
