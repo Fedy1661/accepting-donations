@@ -25,11 +25,13 @@ task("balance", "Prints an account's balance", taskController.balance)
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
+	defaultNetwork: 'hardhat',
 	solidity: '0.8.4',
 	networks: {
+		hardhat: {},
 		rinkeby: {
 			url: process.env.ALCHEMY_API_URL,
-			accounts: [`0x${process.env.RINKEBY_PRIVATE_KEY}`]
+			accounts: process.env.RINKEBY_PRIVATE_KEY !== undefined ? [process.env.RINKEBY_PRIVATE_KEY] : []
 		}
 	}
 }
