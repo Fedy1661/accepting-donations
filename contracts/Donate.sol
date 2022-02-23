@@ -14,7 +14,7 @@ contract Donate {
     }
 
     function deposit() external payable {
-        if(senderStructs[msg.sender] == 0 && msg.value > 0) {
+        if (senderStructs[msg.sender] == 0 && msg.value > 0) {
             senderList.push(msg.sender);
         }
 
@@ -26,11 +26,11 @@ contract Donate {
         _to.transfer(_value);
     }
 
-    function getTotalSumOfSender(address _address) external view returns(uint) {
+    function getTotalSumOfSender(address _address) external view returns (uint) {
         return senderStructs[_address];
     }
 
-    function getSenders() external view returns( address  [] memory){
+    function getSenders() external view returns (address[] memory){
         return senderList;
     }
 }
