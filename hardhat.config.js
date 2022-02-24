@@ -1,5 +1,6 @@
 require('@nomiclabs/hardhat-waffle')
 require("@nomiclabs/hardhat-web3")
+require('solidity-coverage')
 
 const taskController = require("./task/TaskController");
 const {types} = require("hardhat/config");
