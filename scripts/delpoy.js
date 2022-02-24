@@ -1,17 +1,17 @@
-const hre = require("hardhat");
+const hre = require('hardhat');
 
 async function main() {
-	const Donate = await hre.ethers.getContractFactory("Donate");
-	const donate = await Donate.deploy();
+  const Donate = await hre.ethers.getContractFactory('Donate');
+  const donate = await Donate.deploy();
 
-	await donate.deployed();
+  await donate.deployed();
 
-	console.log("Donate deployed to:", donate.address);
+  console.log('Donate deployed to:', donate.address);
 }
 
 main()
-	.then(() => process.exit(0))
-	.catch((error) => {
-		console.error(error);
-		process.exit(1);
-	});
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
