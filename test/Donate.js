@@ -15,12 +15,6 @@ describe('Crypton contract', () => {
 		[owner, addr1] = await ethers.getSigners();
 	})
 
-	describe('Owner', () => {
-		it('Correct owner', async () => {
-			const from = donate.deployTransaction.from;
-			await expect(from).to.equal(owner.address)
-		});
-	});
 	describe('SenderList', () => {
 		it('should remain unchanged when sending 0 Wei', async () => {
 			await donate.connect(addr1).deposit({value: 0})
