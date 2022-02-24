@@ -71,7 +71,7 @@ describe('Crypton contract', () => {
 			expect(sender).to.be.properAddress
 		});
 	});
-	describe('SenderStruct', () => {
+	describe('GetTotalSumOfSender', () => {
 		it('should return user\'s total amount', async () => {
 			const value = 1
 			await donate.connect(addr1).deposit({value})
