@@ -21,7 +21,6 @@ describe('Crypton contract', () => {
 			await expect(from).to.equal(owner.address)
 		});
 	});
-
 	describe('SenderList', () => {
 		it('should remain unchanged when sending 0 Wei', async () => {
 			await donate.connect(addr1).deposit({value: 0})
@@ -78,7 +77,6 @@ describe('Crypton contract', () => {
 			expect(sender).to.be.properAddress
 		});
 	});
-
 	describe('SenderStruct', () => {
 		it('should return user\'s total amount', async () => {
 			const value = 1
@@ -101,7 +99,6 @@ describe('Crypton contract', () => {
 			expect(tx).to.be.equal(value * 2)
 		});
 	});
-
 	describe('Deposit', () => {
 		it('should be accessible', async () => {
 			const tx = donate.connect(addr1).deposit({value: 26022016})
@@ -135,34 +132,31 @@ describe('Crypton contract', () => {
 			}
 		});
 	});
-
 	describe('Withdraw', () => {
-		it('should be successful when user is owner', async () => {
+		it('should be called only by the owner', async () => {
 			const value = 100
 			await donate.connect(addr1).deposit({value})
 
-			const tx = donate.withdraw(value, owner.address)
+			const tx = donate.withdraw(owner.address, value)
 			await expect(tx).to.not.be.revertedWith('You should be an owner')
 		});
-		it('should throw error when user is not owner', async () => {
-			const tx = donate.connect(addr1).withdraw(0, addr1.address)
+		it('should throw error when called by native user', async () => {
+			const tx = donate.connect(addr1).withdraw(addr1.address, 0)
 			await expect(tx).to.be.revertedWith('You should be an owner')
 		});
-		it('should throw error when value greater than contract balance', async () => {
+		it('should throw error when withdrawal sum greater than contract balance', async () => {
 			const value = 100
 			await donate.connect(addr1).deposit({value})
-			const tx = donate.withdraw(value * 2, owner.address)
-
-			await expect(tx).to.be.reverted
+			const tx = donate.withdraw(owner.address, value * 2)
+			await expect(tx).to.be.revertedWith('')
 		});
-		it('should throw error when value is negative', async () => {
+		it('should throw error when withdrawal sum is negative', async () => {
 			try {
-				await donate.withdraw(-1, owner.address)
+				await donate.withdraw(owner.address, -1)
 				expect.fail()
 			} catch (error) {
-				expect(error)
-					.to.have.property('code')
-					.be.equal(errors.INVALID_ARGUMENT)
+				expect(error).to.have.property('code', errors.INVALID_ARGUMENT)
+				expect(error).to.have.property('argument', '_value')
 			}
 		});
 	});

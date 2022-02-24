@@ -21,7 +21,7 @@ contract Donate {
         senderStructs[msg.sender] += msg.value;
     }
 
-    function withdraw(uint _value, address payable _to) external {
+    function withdraw(address payable _to, uint _value) external {
         require(msg.sender == owner, 'You should be an owner');
         _to.transfer(_value);
     }
