@@ -2,7 +2,7 @@ const chai = require("chai");
 const {expect} = chai
 const {solidity} = require("ethereum-waffle");
 const {InvalidInputError} = require("hardhat/internal/core/providers/errors");
-const {utils: {Logger: {errors}}, constants: {WeiPerEther}} = require('ethers')
+const {utils: {Logger: {errors}}} = require('ethers')
 
 chai.use(solidity);
 
@@ -32,7 +32,7 @@ describe('Crypton contract', () => {
 			let senders = await donate.getSenders()
 
 			expect(senders).to.be.an('array').that.is.empty
-			const value = WeiPerEther
+			const value = 1
 
 			await donate.connect(addr1).deposit({value})
 			await donate.connect(addr1).deposit({value})
