@@ -1,45 +1,11 @@
 class TaskController {
-	async accounts(taskArgs, hre) {
-		const accounts = await hre.ethers.getSigners()
-
-		for (const account of accounts) {
-			console.log(account.address)
-		}
-	}
-
-	async owner(taskArgs, hre) {
-		const [owner] = await hre.ethers.getSigners();
-		console.log(owner.address);
-	}
-
-	async balance(taskArgs) {
-		const account = web3.utils.toChecksumAddress(taskArgs.account);
-		const balance = await web3.eth.getBalance(account);
-
-		console.log(web3.utils.fromWei(balance, "ether"), "ETH");
-	}
-
-	async withdraw(taskArgs, hre) {
-		const {from, to} = taskArgs;
-
-		const [owner] = await hre.ethers.getSigners();
-
-		const Donate = await hre.ethers.getContractFactory("Donate");
-		const donate = await Donate.attach(from)
-
-		const tx = await donate.connect(owner).withdraw(to)
-		console.log('In progress')
-
-		await tx.wait()
-		console.log('Withdrawn');
-	}
 
 	async deposit(taskArgs, hre) {
 		const [owner] = await hre.ethers.getSigners();
 		const {to, value} = taskArgs
-
 		const Donate = await hre.ethers.getContractFactory("Donate");
 		const donate = await Donate.attach(to)
+
 
 		const tx = await donate.connect(owner).deposit({value})
 		console.log('In progress');
@@ -52,6 +18,38 @@ class TaskController {
 
 		console.log('Owner balance:', web3.utils.fromWei(ownerBalance, "ether"), "ETH");
 		console.log('Smart Contract:', web3.utils.fromWei(contractBalance, "ether"), "ETH");
+	}
+
+	async withdraw(taskArgs, hre) {
+		const {from, to, value} = taskArgs;
+		const [owner] = await hre.ethers.getSigners();
+		const Donate = await hre.ethers.getContractFactory("Donate");
+		const donate = await Donate.attach(from)
+
+		const tx = await donate.connect(owner).withdraw(to, value)
+		console.log('In progress')
+		await tx.wait()
+		console.log('Withdrawn');
+	}
+
+	async getSenders(taskArgs, hre) {
+		const {contract} = taskArgs;
+		const [owner] = await hre.ethers.getSigners();
+		const Donate = await hre.ethers.getContractFactory("Donate");
+		const donate = await Donate.attach(contract)
+
+		const tx = await donate.connect(owner).getSenders()
+		console.log(tx.join('\n'))
+	}
+
+	async getTotalSumOfSender(taskArgs, hre) {
+		const {contract, sender} = taskArgs;
+		const [owner] = await hre.ethers.getSigners();
+		const Donate = await hre.ethers.getContractFactory("Donate");
+		const donate = await Donate.attach(contract)
+
+		const tx = await donate.connect(owner).getTotalSumOfSender(sender)
+		console.log(hre.ethers.utils.formatEther(tx), "ETH")
 	}
 }
 
