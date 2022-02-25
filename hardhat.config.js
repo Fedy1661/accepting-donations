@@ -9,12 +9,12 @@ require('dotenv').config();
 
 task('deposit', 'Deposit to smart-contract', taskController.deposit)
   .addParam('to', 'Contract address', undefined, types.address)
-  .addParam('value', 'Value', undefined, types.int);
+  .addParam('value', 'Wei', undefined, types.string);
 
 task('withdraw', 'Withdraw', taskController.withdraw)
   .addParam('from', 'Contract address', undefined, types.address)
   .addParam('to', 'Receiver address', undefined, types.address)
-  .addParam('value', 'Wei', undefined, types.int);
+  .addParam('value', 'Wei', undefined, types.string);
 
 task('senders', 'Get the list of senders', taskController.getSenders)
   .addParam('contract', 'Contract address', undefined, types.address);
