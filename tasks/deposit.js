@@ -1,11 +1,10 @@
 const { types } = require('hardhat/config');
+const { getDonateContract } = require('./utils');
 
 task('deposit', 'Deposit to smart-contract', async (taskArgs, hre) => {
   const [owner] = await hre.ethers.getSigners();
   const { to, value } = taskArgs;
-  const Donate = await hre.ethers.getContractFactory('Donate');
-  const donate = await Donate.attach(to);
-
+  const donate = await getDonateContract(hre, to);
 
   const tx = await donate.connect(owner).deposit({ value });
   console.log('In progress');

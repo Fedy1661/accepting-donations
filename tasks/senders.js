@@ -1,11 +1,11 @@
 const { types } = require('hardhat/config');
+const { getDonateContract } = require('./utils');
+
 task('senders', 'Get the list of senders', async (taskArgs, hre) => {
     const { contract } = taskArgs;
-    const [owner] = await hre.ethers.getSigners();
-    const Donate = await hre.ethers.getContractFactory('Donate');
-    const donate = await Donate.attach(contract);
+    const donate = await getDonateContract(hre, contract);
 
-    const tx = await donate.connect(owner).getSenders();
+    const tx = await donate.getSenders();
     console.log(tx.join('\n'));
   }
 )
