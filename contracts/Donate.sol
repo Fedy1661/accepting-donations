@@ -14,7 +14,8 @@ contract Donate {
     }
 
     function deposit() external payable {
-        if (senderStructs[msg.sender] == 0 && msg.value > 0) {
+        require(msg.value > 0, 'Value should be positive');
+        if (senderStructs[msg.sender] == 0) {
             senderList.push(msg.sender);
         }
 

@@ -16,12 +16,6 @@ describe('Crypton contract', () => {
 	})
 
 	describe('SenderList', () => {
-		it('should remain unchanged when sending 0 Wei', async () => {
-			await donate.connect(addr1).deposit({value: 0})
-
-			const senders = await donate.connect(addr1).getSenders();
-			expect(senders).to.not.contain(addr1.address)
-		});
 		it('should be added the sender\'s address when sending more than 0 Wei', async () => {
 			await donate.connect(addr1).deposit({value: 1})
 
@@ -125,7 +119,12 @@ describe('Crypton contract', () => {
 					.be.equal(errors.NUMERIC_FAULT)
 			}
 		});
-	});
+    it('should throw error when sending 0 Wei', async () => {
+      const tx = donate.connect(addr1).deposit({value: 0})
+
+      await expect(tx).to.be.revertedWith('Value should be positive')
+    });
+  });
 	describe('Withdraw', () => {
 		it('should be called only by the owner', async () => {
 			const value = 100
