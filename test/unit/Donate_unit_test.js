@@ -3,17 +3,26 @@ const {expect} = chai
 const {solidity} = require("ethereum-waffle");
 const {InvalidInputError} = require("hardhat/internal/core/providers/errors");
 const {utils: {Logger: {errors}}} = require('ethers')
+const { network } = require('hardhat');
 
 chai.use(solidity);
 
 describe('Crypton contract', () => {
-	let Donate, donate, owner, addr1
+	let Donate, donate, owner, addr1, clean
 
-	beforeEach(async () => {
+	before(async () => {
 		Donate = await ethers.getContractFactory('Donate');
 		donate = await Donate.deploy();
 		[owner, addr1] = await ethers.getSigners();
+    await donate.deployed()
+
+    clean = await network.provider.send('evm_snapshot')
 	})
+
+  afterEach(async () => {
+    await network.provider.send('evm_revert', [clean])
+    clean = await network.provider.send('evm_snapshot')
+  })
 
 	describe('SenderList', () => {
 		it('should be added the sender\'s address when sending more than 0 Wei', async () => {
